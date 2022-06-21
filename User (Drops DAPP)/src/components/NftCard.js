@@ -6,8 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { TextField } from "@mui/material";
-
-// import Modal from './Modal'
 import { useContext } from 'react';
 import { NearContext } from "../provider/NearProvider";
 
@@ -15,74 +13,37 @@ export default function MediaCard({ notPurchase, nft, title, description, media,
 
   const [price, setPrice] = React.useState(0);
   const [openAmount, setOpenAmount] = React.useState(false);
-  const [numberOfTokens, setNumberOfTokens] = React.useState(0);
-
-
-//   const handleOpen = () => setOpen(true);
-//   const handleClose = () => setOpen(false);
-console.log(media);
+  const [numberOfTokens, setNumberOfTokens] = React.useState(null);
 
 const {
   nftPurchase,
-  fetchDropNfts,
   nftPriceView,
 } = useContext(NearContext);
 
   const openPurchase = async () => {
     await getPriceSubmit();
-
     setOpenAmount(true);
-    console.log(nft)
-    
-    // if(purchaseData.tokenId === ''){
-    //   return alert('Please fill complete form!')
-    // }
-    // if(purchaseData.dropName === ''){
-    //     return alert('Please fill complete form!')
-    // }
-    // if(purchaseData.accountId === ''){
-    //     return alert('Please fill complete form!')
-    // }
-    // if(purchaseData.numberOfTokens === ''){
-    //     return alert('Please fill complete form!')
-    // }
-    // if(purchaseData.amount === ''){
-    //     return alert('Please fill complete form!')
-    // } 
-    // else {
-    //     // tokenId, dropName,numberOfTokens,amount,accountId
-    //     nftPurchase(purchaseData.tokenId, purchaseData.dropName,parseInt(purchaseData.numberOfTokens), purchaseData.amount, purchaseData.accountId)
-    // }
   }
+
   const purchaseNftSubmit = async () => {
     console.log({title:nft.title,dropName,numberOfTokens})
     nftPurchase(nft.title,dropName,numberOfTokens);
   }
 
   const getPriceSubmit = async () => {
-    // if(amount === ''){
-    //     alert('Please fill complete form!')
-    // } else{
+
         const nftPrice = await nftPriceView(nft.title);
         console.log('price**********************************',nftPrice)
         setPrice(nftPrice); 
         return nftPrice
-    // }
 }
-
-// getPriceSubmit()
-  // React.useEffect(async ()=>{
-  //   await getPriceSubmit()
-  // },[nft])
 
   return (
     <Card style={{ margin: '5px', background:'#F4F4F4'}} sx={{ maxWidth: 365 }} >
-      {/* <Modal open={open} handleClose={handleClose}  tokenId={tokenId} contractAddress={contractAddress} chain={chain}/> */}
       <CardMedia
         component="img"
         height="200"
         image={media}
-        // alt="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

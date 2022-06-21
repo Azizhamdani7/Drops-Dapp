@@ -26,12 +26,6 @@ function TabPanel(props) {
     );
   }
 
-  const selectionRange = {
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection',
-  }
-
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -109,7 +103,7 @@ export default function StakingForm() {
             token_type:metaData.tokenId,
             drop_name: metaData.dropName,
             metadata: {
-                // title: metaData.tokenTitle,
+                title: metaData.tokenId,
                 description: metaData.description,
                 media: metaData.mediaLink
             },
@@ -162,12 +156,7 @@ export default function StakingForm() {
             ends_at: parseInt(unixEndsAtTimestamp),
             drop_name: drop.dropName
         };
-        // if(dropData.starts_at === ''){
-        //     alert('Please fill complete form!')
-        // }
-        // if(dropData.ends_at === ''){
-        //     alert('Please fill complete form!')
-        // }
+
         if(startsAt === ''){
             alert('Please fill complete form!')
         }
@@ -206,7 +195,6 @@ export default function StakingForm() {
             alert('Please fill complete form!')
         } else{
             removeDrop(dropName)
-
         }
 
     }
@@ -254,17 +242,6 @@ export default function StakingForm() {
                     <div ></div>
                     <Typography style={{marginTop:'2%'}} fontWeight='' variant="h5" color='#909091'>Insert {metaData.tokenId} Metadata</Typography>
 
-                    {/* <div style={{
-                        marginTop:'1%'
-                    }}>
-                        <TextField
-                        name='tokenTitle'
-                        value={metaData.tokenTitle}
-                        fullWidth
-                        placeholder="Token Title"
-                        onChange={onChangeMetaData}
-                        />
-                    </div> */}
                     <div style={{
                         marginTop:'1%'
                     }}>
@@ -328,79 +305,48 @@ export default function StakingForm() {
                 <div style={{
                         marginTop:'1%'
                     }}>
-                        {/* <TextField
-                        name='startsAt'
-                        value={drop.startsAt}
-                        fullWidth
-                        placeholder="Starts at"
-                        onChange={onChangeDrop}
-                        /> */}
 
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DateTimePicker
-      fullWidth
-        renderInput={(props) => <TextField fullWidth {...props} />}
-        label="Starts At"
-        value={startsAt}
-        onChange={(newValue,) => {
-            setStartsAt(newValue);
-        }}
-      />
-    </LocalizationProvider>
-
-                        
-                               {/* <DateRangePicker
-                                    ranges={[selectionRange]}
-                                    onChange={()=>{}}
-                                /> */}
-                        {/* 
-                        <div>
                             <DateTimePicker
-                                width='100%'
-                                className={{
-                                    width:'300%',
-                                    height:'100px'
+                            fullWidth
+                                renderInput={(props) => <TextField fullWidth {...props} />}
+                                label="Starts At"
+                                value={startsAt}
+                                onChange={(newValue,) => {
+                                    setStartsAt(newValue);
                                 }}
-                                value={timeValue} 
                             />
-                        </div> 
-                        */}
+                        </LocalizationProvider>
 
-                    </div>
-                    <div style={{
-                        marginTop:'2%'
-                    }}>
-                        {/* <TextField
-                        name='endsAt'
-                        value={drop.endsAt}
-                        fullWidth
-                        placeholder="Ends at"
-                        onChange={onChangeDrop}
-                        /> */}
+                        </div>
+                        <div style={{
+                            marginTop:'2%'
+                        }}>
 
-                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DateTimePicker
-      fullWidth
-        renderInput={(props) => <TextField fullWidth {...props} />}
-        label="Ends At"
-        value={endsAt}
-        onChange={(newValue) => {
-            setEndsAt(newValue);
-        }}
-      />
-    </LocalizationProvider>
-                    </div>
-                    <div style={{
-                        marginTop:'2%'
-                    }}>
-                        <TextField
-                        name='dropName'
-                        value={drop.dropName}
-                        fullWidth
-                        placeholder="Drop Name"
-                        onChange={onChangeDrop}
-                        />
-                    </div>
+
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DateTimePicker
+                            fullWidth
+                                renderInput={(props) => <TextField fullWidth {...props} />}
+                                label="Ends At"
+                                value={endsAt}
+                                onChange={(newValue) => {
+                                    setEndsAt(newValue);
+                                }}
+                            />
+                        </LocalizationProvider>
+                        </div>
+                        <div style={{
+                            marginTop:'2%'
+                        }}>
+                            <TextField
+                            name='dropName'
+                            value={drop.dropName}
+                            fullWidth
+                            placeholder="Drop Name"
+                            onChange={onChangeDrop}
+                            />
+                        </div>
                     <div style={{
                         marginTop:'4%'
                     }}>

@@ -16,7 +16,6 @@ export default function MediaCard({title, starts_at, ends_at}) {
   const [nfts, setNfts] = React.useState([]);
 
       const {
-        nftPurchase,
         fetchDropNfts,
     } = useContext(NearContext);
 
@@ -25,7 +24,6 @@ export default function MediaCard({title, starts_at, ends_at}) {
     const nfts = await fetchDropNfts(title);
 
     if(nfts && nfts.length){
-        console.log('******************************** NFTS',nfts);
         setNfts([...nfts]); 
     }
 

@@ -1,20 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { connect, keyStores, WalletConnection, utils, Contract } from "near-api-js";
 import { parseNearAmount } from "near-api-js/lib/utils/format";
-/* import NFT from "../models/NFT";
-import Purchasable from "../models/Purchasable";
-import viewToMax from "../utils/viewToMax"; */
-
-
-// --- Production: mainnet ---
-// const config = {
-//   networkId: "mainnet",
-//   contractName: "mtvrs-app.near",
-//   nodeUrl: "https://rpc.mainnet.near.org",
-//   walletUrl: "https://wallet.mainnet.near.org",
-//   helperUrl: "https://helper.mainnet.near.org",
-//   explorerUrl: "https://explorer.mainnet.near.org",
-// };
 
 // --- Development: testnet ---
 const config = {
@@ -95,7 +81,6 @@ export default function NearProvider({ children }) {
 
   const nftPriceView = async (tokenId)=>{
         if (account == null) {
-          // throw new Error("Account must be defined");
         }else{
           let price = await account?.viewFunction(
             config.contractName, "nft_get_price",
@@ -106,50 +91,6 @@ export default function NearProvider({ children }) {
         }
 
       }
-
-  const dropsInsert = async (starts_at,ends_at,drop_name) => {
-      if (account == null) {
-        // throw new Error("Account must be defined");
-      }
-      try {
-        const resp = await account.functionCall({
-          contractId: config.contractName,
-          methodName: "drops_insert",
-          args: {
-            drop: {
-              starts_at,
-              ends_at,  
-              drop_name
-            }
-          }, gas: GAS,
-        })
-        console.log('resp*****', resp)
-        alert('Submitted successfully')
-      } catch (error) {
-        console.log('error****', error)
-      }
-
-    }
-
-  const supplyInsert  = async (token_id,supply) => {
-      if (account == null) {
-        // throw new Error("Account must be defined");
-      }
-      try {
-        const resp = await account.functionCall({
-          contractId: config.contractName,
-          methodName: "supply_cap_insert",
-          args: {
-            token_id,
-            supply          
-          }, gas: GAS,
-        })
-        console.log('resp*****', resp)
-      } catch (error) {
-        console.log('error****', error)
-      }
-
-    }
 
     const fetchDropNfts = async (dropName)=>{
       if (account == null) {
@@ -169,7 +110,6 @@ export default function NearProvider({ children }) {
       if (account === null){
         // throw new Error("Account must be defined");
       } else {
-        console.log('acc**************************',accountId)
         const nftContract =  new Contract(account,"nft_contract10.testnet",{
           viewMethods : ["nft_tokens_for_owner"],
           sender : accountId,
@@ -181,7 +121,6 @@ export default function NearProvider({ children }) {
         nfts = await nftContract?.nft_tokens_for_owner(
           {account_id : accountId}
         );
-        console.log('***********************NFTs',nfts)
         return nfts
       }
 
@@ -203,14 +142,10 @@ export default function NearProvider({ children }) {
 
 
    const price = await nftPriceView(tokenId);
-
    let amount  = price * numberOfTokens;
-    console.log("amount*****************",tokenId, dropName,numberOfTokens, amount);
-
-
 
    if (account == null) {
-     throw new Error("Account must be defined");
+    //  throw new Error("Account must be defined");
    }
 
    return account.functionCall({
@@ -243,8 +178,6 @@ export default function NearProvider({ children }) {
         logout,
         accountId,
         account,
-        supplyInsert,
-        dropsInsert,
         nftPriceView,
         nftPurchase,
         fetchNfts,

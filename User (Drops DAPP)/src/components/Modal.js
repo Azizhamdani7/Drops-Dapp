@@ -1,14 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
 import Collection from './Collection';
-import { useContext } from 'react';
-import { NearContext } from "../provider/NearProvider";
 
 const style = {
   position: 'absolute',

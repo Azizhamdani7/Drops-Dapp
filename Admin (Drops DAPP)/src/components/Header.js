@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-// import {login} from '../provider/NearProvider'
 import { NearContext } from '../provider/NearProvider';
 import { useContext } from 'react';
 
@@ -12,8 +11,6 @@ export default function ButtonAppBar() {
 const {login,isConnecting,accountId,isSignedIn,isRegistered,logout} = useContext(NearContext)
 const handleLoginChange =()=>{
    login();
-   /* let abc = isRegistered()
-   console.log("response", abc) */
   }
   return (
     <Box sx={{ flexGrow: 1, width : '100%' }}>

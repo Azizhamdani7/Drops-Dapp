@@ -1,20 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { connect, keyStores, WalletConnection, utils, Contract } from "near-api-js";
-import { parseNearAmount } from "near-api-js/lib/utils/format";
-/* import NFT from "../models/NFT";
-import Purchasable from "../models/Purchasable";
-import viewToMax from "../utils/viewToMax"; */
-
-
-// --- Production: mainnet ---
-// const config = {
-//   networkId: "mainnet",
-//   contractName: "mtvrs-app.near",
-//   nodeUrl: "https://rpc.mainnet.near.org",
-//   walletUrl: "https://wallet.mainnet.near.org",
-//   helperUrl: "https://helper.mainnet.near.org",
-//   explorerUrl: "https://explorer.mainnet.near.org",
-// };
 
 // --- Development: testnet ---
 const config = {
@@ -31,12 +16,11 @@ const GAS = "300000000000000"; // max gas for any transaction
 export const NearContext = createContext({});
 
 export default function NearProvider({ children }) {
-  // Internal state
+  
   const [, setNearConnection] = useState(null);
   const [walletConnection, setWalletConnection] = useState(null);
   const [accountId, setAccountId] = useState(null);
 
-  // External state.
   const [isConnecting, setIsConnecting] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isError, setIsError] = useState(false);
