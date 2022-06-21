@@ -119,6 +119,7 @@ impl Contract {
     pub fn remove_drop(&mut self, drop_name: DropName){
         self.drops.remove(&drop_name);
     }
+    //new comment added
 }
 
 #[cfg(test)]
