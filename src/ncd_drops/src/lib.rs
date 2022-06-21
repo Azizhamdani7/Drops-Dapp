@@ -1,10 +1,6 @@
-use std::collections::HashMap;
-use std::vec;
-
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::{LazyOption, LookupMap, UnorderedMap};
 use near_sdk::json_types::{Base64VecU8, U128};
-use near_sdk::serde::de::value;
 use near_sdk::serde::{Deserialize, Serialize};
 
 use crate::metadata::*;
@@ -30,7 +26,7 @@ pub struct Drop {
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 
 pub struct Contract {
-    metadata: LazyOption<ContractMetadata>, // metadata for the contract itself
+    metadata: LazyOption<ContractMetadata>,
 
     pub nft_price: LookupMap<TokenId, U128>,
 
@@ -49,13 +45,14 @@ pub struct Contract {
 
 #[derive(BorshSerialize)]
 pub enum StorageKey {
+    NftMetadata,
     NftPrice,
     NftTokenSupply,
     MintedNftTokens,
     Drops,
-    NftMetadata,
     NftAgainstDrop,
 }
+
 #[near_bindgen]
 impl Contract {
     #[init]
@@ -103,23 +100,19 @@ impl Contract {
         }
         None
     }
-    // for (key, val) in gfg.iter() {
-    //     println!("{} {}", key, val);
-    //  }
 
     pub fn get_drops(&self) -> Vec<Drop> {
-        // let drops: HashMap<DropName, Vec<TokenMetadata>> = self.drops.try_from().unwrap();
         let mut vec:Vec<Drop> = Vec::new();
 
-        for (key, val) in self.drops.iter() {
+        for (_key, val) in self.drops.iter() {
             vec.push(val);
         }
         vec
     }
     pub fn remove_drop(&mut self, drop_name: DropName){
+        self.assert_owner();
         self.drops.remove(&drop_name);
     }
-    //new comment added
 }
 
 #[cfg(test)]
@@ -229,5 +222,46 @@ mod drop_tests {
         let token_id = "alpha".to_string();
         let supply = U128::from(55);
         contract.supply_cap_insert(token_id, supply);
+    }
+    #[test]
+    fn get_drop_nft_test() {
+        let context = get_context();
+        testing_env!(context.clone());
+
+        let metadata = get_contract_metadata();
+        let mut contract = Contract::new(
+            context.signer_account_id.clone().try_into().unwrap(),
+            context.signer_account_id.clone().try_into().unwrap(),
+            metadata.clone(),
+        );
+        let drop_name = "alpha".to_string();
+        contract.get_drop_nft(drop_name);
+    }
+    #[test]
+    fn remove_drop_test() {
+        let context = get_context();
+        testing_env!(context.clone());
+
+        let metadata = get_contract_metadata();
+        let mut contract = Contract::new(
+            context.signer_account_id.clone().try_into().unwrap(),
+            context.signer_account_id.clone().try_into().unwrap(),
+            metadata.clone(),
+        );
+        let drop_name = "alpha".to_string();
+        contract.remove_drop(drop_name);
+    }
+    #[test]
+    fn get_drop_test() {
+        let context = get_context();
+        testing_env!(context.clone());
+
+        let metadata = get_contract_metadata();
+        let mut contract = Contract::new(
+            context.signer_account_id.clone().try_into().unwrap(),
+            context.signer_account_id.clone().try_into().unwrap(),
+            metadata.clone(),
+        );
+        contract.get_drops();
     }
 }
