@@ -21,7 +21,6 @@ export default function BasicModal({nfts, dropName, open, handleClose }) {
 
   return (
 
-    <div> <p onClick={handleClose}>close</p>
       <Modal
         open={open}
         onClose={handleClose}
@@ -30,7 +29,6 @@ export default function BasicModal({nfts, dropName, open, handleClose }) {
       <Collection dropName={dropName} nfts={nfts}/>
         </Box>
       </Modal> 
-      </div>
 
 
   );

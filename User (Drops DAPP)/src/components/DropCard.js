@@ -52,7 +52,7 @@ export default function MediaCard({title, starts_at, ends_at}) {
 
   return (
     <Card style={{ margin: '5px', background:'#F4F4F4'}} sx={{ maxWidth: 365 }} >
-      { open &&  <Modal nfts={nfts} dropName={title} open={open} handleClose={handleClose}/> }
+      <Modal nfts={nfts} dropName={title} open={open} handleClose={handleClose}/>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}

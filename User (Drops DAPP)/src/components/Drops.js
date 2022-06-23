@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { NearContext } from "../provider/NearProvider";
 import Collection from './Collection';
 import DropsCollection from './DropsCollection';
+import NftCollection from './NftCollection';
 
 
 function TabPanel(props) {
@@ -34,7 +35,7 @@ function TabPanel(props) {
   }
 
 
-export default function StakingForm() {
+export default function Drops() {
 
     const {        
         fetchNfts,
@@ -56,6 +57,7 @@ export default function StakingForm() {
             nfts.forEach((nft)=>{
                 ownedNfts.push(nft.metadata)
             })
+            console.log({ownedNfts})
             setOwnedNfts([...ownedNfts])
     }
 
@@ -102,7 +104,7 @@ export default function StakingForm() {
             </TabPanel>
             <TabPanel  onClick={ownedNftsSubmit} style={{width:'60%'}} value={value} index={1}>
                 <Typography fontWeight='bold' variant="h4" color='#000'>Owned NFTs</Typography>
-                    <Collection notPurchase={true} nfts={ownedNfts}/>
+                   <NftCollection notPurchase={true} nfts={ownedNfts}/> 
             </TabPanel>
             </Grid>
         </Paper>

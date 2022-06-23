@@ -9,19 +9,16 @@ import { TextField } from "@mui/material";
 import { useContext } from 'react';
 import { NearContext } from "../provider/NearProvider";
 
-export default function MediaCard({ notPurchase, nft, title, description, media, dropName}) {
-
-  const [price, setPrice] = React.useState(0);
+export default function MediaCard({ notPurchase, nft, title, description, media, dropName, price}) {
+  
   const [openAmount, setOpenAmount] = React.useState(false);
   const [numberOfTokens, setNumberOfTokens] = React.useState(null);
 
 const {
   nftPurchase,
-  nftPriceView,
 } = useContext(NearContext);
 
   const openPurchase = async () => {
-    await getPriceSubmit();
     setOpenAmount(true);
   }
 
@@ -29,14 +26,6 @@ const {
     console.log({title:nft.title,dropName,numberOfTokens})
     nftPurchase(nft.title,dropName,numberOfTokens);
   }
-
-  const getPriceSubmit = async () => {
-
-        const nftPrice = await nftPriceView(nft.title);
-        console.log('price**********************************',nftPrice)
-        setPrice(nftPrice); 
-        return nftPrice
-}
 
   return (
     <Card style={{ margin: '5px', background:'#F4F4F4'}} sx={{ maxWidth: 365 }} >
@@ -52,7 +41,7 @@ const {
         <Typography variant="body2" color="text.secondary">
           {'Description: '}{description}
         </Typography>
-        {(openAmount && !notPurchase) && <Typography variant="body2" color="text.secondary">
+        { !notPurchase && <Typography fontWeight="bold" variant="body2" color="text.secondary">
           {'Price: '}{price}
         </Typography>}
         { openAmount && <div style={{
